@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+  Input array elements individually:
+  <input type="number" id="arrayElement" />
+  <input type="button" id="addButton" value="Add" onclick="add_element_to_array();" />
+  <input type="button" id="Output" value="Find" onclick="searchElement();" />
+  <br/>
+  <span id="outPut"></span>
+</body>
+<script>
+  var index = 0;
+  var array = Array();
+  var result;
+
+  function add_element_to_array() {
+    var elementValue = document.getElementById("arrayElement").value;
+    array[index] = elementValue
+    index++;
+    document.getElementById("arrayElement").value = "";
+  }
+
+  function searchElement() {
+    var answer = getOutput();
+    document.getElementById("outPut").innerHTML = answer;
+  }
+
+  function getOutput() {
+    var obj = {}, mostFreq = 0, frequentElementArray = [];
+
+    array.forEach(element => {
+      if (!obj[element]) {
+        obj[element] = 1;
+      } else {
+        obj[element]++;
+      }
+
+      if (obj[element] > mostFreq) {
+        mostFreq = obj[element];
+        frequentElementArray = [element];
+      } else if (obj[element] === mostFreq) {
+        frequentElementArray.push(element);
+      }
+    });
+    return frequentElementArray;
+
+  }
+</script>
+
+</html>

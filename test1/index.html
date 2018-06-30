@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    Input array elements individually:
+    <input type="number" id="arrayElement" />
+    <input type="button" id="addButton" value="Add" onclick="add_element_to_array();" />
+    <br/> Target Number:
+    <input type="number" id="targetElement" />
+    <br/>
+    <input type="button" id="searchButton" value="Search" onclick="searchElement();" />
+    <br/>
+    <span id="outPut"></span>
+</body>
+<script>
+    var index = 0;
+    var array = Array();
+    var targetElement;
+    var result;
+
+    function add_element_to_array() {
+        var elementValue = document.getElementById("arrayElement").value;
+        array[index] = elementValue
+        index++;
+        document.getElementById("arrayElement").value = "";
+    }
+
+    function searchElement() {
+        var answer = getOutput();
+        document.getElementById("outPut").innerHTML = "Target Number : " + targetElement + " Output : " + answer;
+    }
+
+    function getOutput() {
+        targetElement = document.getElementById("targetElement").value;
+        array.sort();
+        var n = array.length;
+        if (parseInt(targetElement) <= parseInt(array[0]))
+            return array[0];
+        if (parseInt(targetElement) >= parseInt(array[n - 1]))
+            return array[n - 1];
+        var i = 0, j = n, mid = 0;
+        while (i < j) {
+            mid = parseInt((i + j) / 2);
+            if (parseInt(array[mid]) == parseInt(targetElement))
+                return array[mid];
+            if (parseInt(targetElement) < parseInt(array[mid])) {
+                if (mid > 0 && parseInt(targetElement) > parseInt(array[mid - 1]))
+                    return getClosest(array[mid - 1],
+                        array[mid], targetElement);
+
+                j = mid;
+            }
+            else {
+                if (mid < n - 1 && parseInt(targetElement) < parseInt(array[mid + 1]))
+                    return getClosest(array[mid],
+                        array[mid + 1], targetElement);
+                i = mid + 1;
+            }
+        }
+        return array[mid];
+    }
+    function getClosest(val1, val2, target) {
+        if (target - val1 >= val2 - target)
+            return val2;
+        else
+            return val1;
+    }
+</script>
+
+</html>
